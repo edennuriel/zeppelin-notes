@@ -1,0 +1,831 @@
+{
+  "paragraphs": [
+    {
+      "text": "%sh\n\necho get git\n[[ $(command -v git) ]] || sudo yum install git -y\n\necho get wget\n[[ $(command -v wget) ]] || sudo yum install wget -y\ncd ~\n\necho check destination dir\n[[ -d ~/phxdemo ]] \u0026\u0026  mv ~/phxdemo  ~/phxdem.bck-`date +%s`\n\necho clone repo\ngit clone https://github.com/edennuriel/tableau-odbc-phoenix-tutorial ~/phxdemo\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "get git\nget wget\ncheck destination dir\nclone repo\nCloning into \u0027/home/zeppelin/phxdemo\u0027...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481473_1202615260",
+      "id": "20180606-220352_778902877",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n\nexport mysqlhost\u003denhdpm\nexport mysqluser\u003droot\nexport mysqlpass\u003dadmin\n\n#test connection localmode\ndbs\u003d\"\"\ndbs\u003d$(mysql mysql -e \"show databases;\" 2\u003e/dev/null )\nif [[ -z $dbs ]] ; then \n    echo failed connecting locally\n    dbs\u003d$(mysql -h $mysqlhost -u $mysqluser -p$mysqlpass mysql -e  \"show databases;\" 2\u003e/dev/null )\n    if [[ -z $dbs ]] ; then\n        echo failed connecting with host: $mysqlhost user: $mysqluser password: $mysqlpass\n    fi\nfi\necho $dbs\n\ncd  ~/phxdemo\n#todo: [[ command -v mysql ]] || yum install -y mysql //client and server if needed\n./mysql_load.sh $mysqlhost  2\u003estdout 2\u003estderr\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "failed connecting locally\nDatabase information_schema ambari hive mysql performance_schema\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481478_1202230511",
+      "id": "20180607-221905_1544800730",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%jdbc(mysql)\nselect * from corp.sales limit 10;",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "product_id\ttime_id\tcustomer_id\tpromotion_id\tstore_id\tstore_sales\tstore_cost\tunit_sales\n1\t1011\t1979\t0\t3\t14.25\t5.5575\t5\n1\t1019\t9137\t0\t20\t8.55\t3.591\t3\n1\t1024\t6709\t0\t11\t8.55\t3.1635\t3\n1\t1029\t1393\t0\t21\t8.55\t3.6765\t3\n1\t1030\t4861\t0\t6\t5.7\t2.793\t2\n1\t1054\t6843\t1182\t15\t5.7\t2.109\t2\n1\t1060\t5295\t0\t16\t5.7\t2.508\t2\n1\t736\t2927\t0\t7\t14.25\t4.7025\t5\n1\t741\t614\t0\t17\t8.55\t2.565\t3\n1\t741\t6211\t0\t19\t5.7\t2.622\t2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481479_1201845762",
+      "id": "20180606-220351_1663909097",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%jdbc(phoenix)\ndrop table if EXISTS corp.customer;\ndrop table if EXISTS corp.sales;\ndrop table if EXISTS corp.inventory;\ndrop table if EXISTS corp.product;\ndrop table if EXISTS corp.store;",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481479_1201845762",
+      "id": "20180606-220351_1399879902",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n#loading the data to phonix using psql\ncd ~/phxdemo\n./phoenix_load.sh",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "adding /usr/jdk64/jdk1.8.0_112/bin (rc \u003d 0)\nexport PATH\u003d/usr/jdk64/jdk1.8.0_112/bin:/usr/sbin:/sbin:/usr/lib/ambari-server/*:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/var/lib/ambari-agent\nadding /usr/hdp/current/phoenix-client/bin (rc \u003d 0)\nexport PATH\u003d/usr/hdp/current/phoenix-client/bin:/usr/jdk64/jdk1.8.0_112/bin:/usr/sbin:/sbin:/usr/lib/ambari-server/*:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/var/lib/ambari-agent\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:21 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:22 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 1.568 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 10281 rows upserted\nTime: 2.99 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:30 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:31 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 1.525 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 7282 rows upserted\nTime: 1.092 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:37 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:39 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 4.746 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 1560 rows upserted\nTime: 0.51 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:47 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:48 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 1.519 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 164558 rows upserted\nTime: 11.601 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:25:04 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:25:05 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 3.042 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 25 rows upserted\nTime: 0.117 sec(s)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481480_1199922017",
+      "id": "20180608-230901_483793132",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%jdbc(phoenix)\nselect * from corp.customer limit 10;",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "CUSTOMER_ID\tACCOUNT_NUM\tLNAME\tFNAME\tMI\tADDRESS1\tADDRESS2\tADDRESS3\tADDRESS4\tCITY\tSTATE_PROVINCE\tPOSTAL_CODE\tCOUNTRY\tCUSTOMER_REGION_ID\tPHONE1\tPHONE2\tBIRTHDATE\tMARITAL_STATUS\tYEARLY_INCOME\tGENDER\tTOTAL_CHILDREN\tNUM_CHILDREN_AT_HOME\tEDUCATION\tDATE_ACCNT_OPENED\tMEMBER_CARD\tOCCUPATION\tHOUSEOWNER\tNUM_CARS_OWNED\tFULLNAME\n1\t87462024688\tNowmer\tSheri\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n2\t87470586299\tWhelply\tDerrick\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n3\t87475757600\tDerry\tJeanne\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n4\t87500482201\tSpence\tMichael\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n5\t87514054179\tGutierrez\tMaya\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n6\t87517782449\tDamstra\tRobert\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n7\t87521172800\tKanagaki\tRebecca\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n8\t87539744377\tBrunner\tKim\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n9\t87544797658\tBlumberg\tBrenda\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n10\t87568712234\tStanz\tDarren\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481480_1199922017",
+      "id": "20180608-231827_168037997",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Drop phoenix tables",
+      "text": "%jdbc(phoenix)\ndrop table if EXISTS corp.customer;\ndrop table if EXISTS corp.sales;\ndrop table if EXISTS corp.inventory;\ndrop table if EXISTS corp.product;\ndrop table if EXISTS corp.store;",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 3.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": true,
+        "title": true,
+        "results": {
+          "3": {
+            "graph": {
+              "mode": "table",
+              "height": 93.0,
+              "optionOpen": false
+            }
+          },
+          "4": {
+            "graph": {
+              "mode": "table",
+              "height": 90.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 0"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481481_1199537268",
+      "id": "20180608-231937_923369962",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "schema info tables",
+      "text": "%jdbc(mysql)\ndesc information_schema.tables\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 2.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": true,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 476.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "COLUMN_NAME\tCOLUMN_TYPE\tIS_NULLABLE\tCOLUMN_KEY\tCOLUMN_DEFAULT\tEXTRA\nTABLE_CATALOG\tvarchar(512)\tNO\t\t\t\nTABLE_SCHEMA\tvarchar(64)\tNO\t\t\t\nTABLE_NAME\tvarchar(64)\tNO\t\t\t\nTABLE_TYPE\tvarchar(64)\tNO\t\t\t\nENGINE\tvarchar(64)\tYES\t\tnull\t\nVERSION\tbigint(21) unsigned\tYES\t\tnull\t\nROW_FORMAT\tvarchar(10)\tYES\t\tnull\t\nTABLE_ROWS\tbigint(21) unsigned\tYES\t\tnull\t\nAVG_ROW_LENGTH\tbigint(21) unsigned\tYES\t\tnull\t\nDATA_LENGTH\tbigint(21) unsigned\tYES\t\tnull\t\nMAX_DATA_LENGTH\tbigint(21) unsigned\tYES\t\tnull\t\nINDEX_LENGTH\tbigint(21) unsigned\tYES\t\tnull\t\nDATA_FREE\tbigint(21) unsigned\tYES\t\tnull\t\nAUTO_INCREMENT\tbigint(21) unsigned\tYES\t\tnull\t\nCREATE_TIME\tdatetime\tYES\t\tnull\t\nUPDATE_TIME\tdatetime\tYES\t\tnull\t\nCHECK_TIME\tdatetime\tYES\t\tnull\t\nTABLE_COLLATION\tvarchar(32)\tYES\t\tnull\t\nCHECKSUM\tbigint(21) unsigned\tYES\t\tnull\t\nCREATE_OPTIONS\tvarchar(255)\tYES\t\tnull\t\nTABLE_COMMENT\tvarchar(2048)\tNO\t\t\t\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481481_1199537268",
+      "id": "20180531-211029_1187830731",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Tables ",
+      "text": "%jdbc(mysql)\nselect table_name from  information_schema.tables where table_schema\u003d\u0027corp\u0027\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 3.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": true,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 488.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TABLE_NAME\ncustomer\ninventory\nproduct\nsales\nstore\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481482_1200691515",
+      "id": "20180531-211041_2114147620",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%jdbc(mysql)\nselect column_name from  information_schema.columns where table_name\u003d\u0027store\u0027\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 3.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 538.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "COLUMN_NAME\nstore_id\nstore_type\nregion_id\nstore_name\nstore_number\nstore_street_address\nstore_city\nstore_state\nstore_postal_code\nstore_country\nstore_manager\nstore_phone\nstore_fax\nfirst_opened_date\nlast_remodel_date\nstore_sqft\ngrocery_sqft\nfrozen_sqft\nmeat_sqft\ncoffee_bar\nvideo_store\nsalad_bar\nprepared_food\nflorist\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481482_1200691515",
+      "id": "20180602-010627_707419664",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%jdbc(phoenix)\ndelete from  corp.customer;\ndelete from  corp.sales;\ndelete from  corp.inventory;\ndelete from  corp.product;\ndelete from  corp.store;",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 10281"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 164529"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 7282"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 1560"
+          },
+          {
+            "type": "TEXT",
+            "data": "Query executed successfully. Affected rows : 25"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481483_1200306766",
+      "id": "20180608-232439_591965510",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n#sqoop from mysql to hdfs (csv) via map reduce (mysql must be installed on all nodes)\nsqoop    import-all-tables   --direct  --connect jdbc:mysql://enhdpm/corp --username root -password admin",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "INCOMPLETE",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Warning: /usr/hdp/2.6.5.0-292/accumulo does not exist! Accumulo imports will fail.\nPlease set $ACCUMULO_HOME to the root of your Accumulo installation.\n18/06/08 22:49:30 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6.2.6.5.0-292\n18/06/08 22:49:30 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.\n18/06/08 22:49:30 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.\n18/06/08 22:49:30 INFO tool.CodeGenTool: Beginning code generation\n18/06/08 22:49:30 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `customer` AS t LIMIT 1\n18/06/08 22:49:30 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `customer` AS t LIMIT 1\n18/06/08 22:49:30 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/hdp/2.6.5.0-292/hadoop-mapreduce\nNote: /tmp/sqoop-zeppelin/compile/12d302ae1ee498248f614c3818139df4/customer.java uses or overrides a deprecated API.\nNote: Recompile with -Xlint:deprecation for details.\n18/06/08 22:49:32 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-zeppelin/compile/12d302ae1ee498248f614c3818139df4/customer.jar\n18/06/08 22:49:32 INFO manager.DirectMySQLManager: Beginning mysqldump fast path import\n18/06/08 22:49:32 INFO mapreduce.ImportJobBase: Beginning import of customer\n18/06/08 22:49:34 INFO client.RMProxy: Connecting to ResourceManager at enhdpm.field.hortonworks.com/172.26.237.90:8050\n18/06/08 22:49:34 INFO client.AHSProxy: Connecting to Application History server at enhdpm.field.hortonworks.com/172.26.237.90:10200\n18/06/08 22:49:36 INFO db.DBInputFormat: Using read commited transaction isolation\n18/06/08 22:49:36 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`customer_id`), MAX(`customer_id`) FROM customer\n18/06/08 22:49:36 INFO db.IntegerSplitter: Split size: 2570; Num splits: 4 from: 1 to: 10281\n18/06/08 22:49:36 INFO mapreduce.JobSubmitter: number of splits:4\n18/06/08 22:49:36 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1528497732555_0003\n18/06/08 22:49:36 INFO impl.YarnClientImpl: Submitted application application_1528497732555_0003\n18/06/08 22:49:36 INFO mapreduce.Job: The url to track the job: http://enhdpm.field.hortonworks.com:8088/proxy/application_1528497732555_0003/\n18/06/08 22:49:36 INFO mapreduce.Job: Running job: job_1528497732555_0003\n18/06/08 22:49:44 INFO mapreduce.Job: Job job_1528497732555_0003 running in uber mode : false\n18/06/08 22:49:44 INFO mapreduce.Job:  map 0% reduce 0%\n18/06/08 22:49:50 INFO mapreduce.Job:  map 25% reduce 0%\n18/06/08 22:49:51 INFO mapreduce.Job:  map 100% reduce 0%\n18/06/08 22:49:52 INFO mapreduce.Job: Job job_1528497732555_0003 completed successfully\n18/06/08 22:49:53 INFO mapreduce.Job: Counters: 30\n\tFile System Counters\n\t\tFILE: Number of bytes read\u003d0\n\t\tFILE: Number of bytes written\u003d672716\n\t\tFILE: Number of read operations\u003d0\n\t\tFILE: Number of large read operations\u003d0\n\t\tFILE: Number of write operations\u003d0\n\t\tHDFS: Number of bytes read\u003d487\n\t\tHDFS: Number of bytes written\u003d2122869\n\t\tHDFS: Number of read operations\u003d16\n\t\tHDFS: Number of large read operations\u003d0\n\t\tHDFS: Number of write operations\u003d8\n\tJob Counters \n\t\tLaunched map tasks\u003d4\n\t\tOther local map tasks\u003d4\n\t\tTotal time spent by all maps in occupied slots (ms)\u003d136568\n\t\tTotal time spent by all reduces in occupied slots (ms)\u003d0\n\t\tTotal time spent by all map tasks (ms)\u003d17071\n\t\tTotal vcore-milliseconds taken by all map tasks\u003d17071\n\t\tTotal megabyte-milliseconds taken by all map tasks\u003d69922816\n\tMap-Reduce Framework\n\t\tMap input records\u003d4\n\t\tMap output records\u003d10281\n\t\tInput split bytes\u003d487\n\t\tSpilled Records\u003d0\n\t\tFailed Shuffles\u003d0\n\t\tMerged Map outputs\u003d0\n\t\tGC time elapsed (ms)\u003d434\n\t\tCPU time spent (ms)\u003d10560\n\t\tPhysical memory (bytes) snapshot\u003d1257889792\n\t\tVirtual memory (bytes) snapshot\u003d22128697344\n\t\tTotal committed heap usage (bytes)\u003d935854080\n\tFile Input Format Counters \n\t\tBytes Read\u003d0\n\tFile Output Format Counters \n\t\tBytes Written\u003d2122869\n18/06/08 22:49:53 INFO mapreduce.ImportJobBase: Transferred 2.0245 MB in 19.238 seconds (107.7616 KB/sec)\n18/06/08 22:49:53 INFO mapreduce.ImportJobBase: Retrieved 10281 records.\n18/06/08 22:49:53 INFO tool.CodeGenTool: Beginning code generation\n18/06/08 22:49:53 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `inventory` AS t LIMIT 1\n18/06/08 22:49:53 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/hdp/2.6.5.0-292/hadoop-mapreduce\nNote: /tmp/sqoop-zeppelin/compile/12d302ae1ee498248f614c3818139df4/inventory.java uses or overrides a deprecated API.\nNote: Recompile with -Xlint:deprecation for details.\n18/06/08 22:49:53 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-zeppelin/compile/12d302ae1ee498248f614c3818139df4/inventory.jar\n18/06/08 22:49:53 WARN manager.CatalogQueryManager: The table inventory contains a multi-column primary key. Sqoop will default to the column product_id only for this job.\n18/06/08 22:49:53 INFO manager.DirectMySQLManager: Beginning mysqldump fast path import\n18/06/08 22:49:53 INFO mapreduce.ImportJobBase: Beginning import of inventory\n18/06/08 22:49:53 INFO client.RMProxy: Connecting to ResourceManager at enhdpm.field.hortonworks.com/172.26.237.90:8050\n18/06/08 22:49:53 INFO client.AHSProxy: Connecting to Application History server at enhdpm.field.hortonworks.com/172.26.237.90:10200\n18/06/08 22:49:55 INFO db.DBInputFormat: Using read commited transaction isolation\n18/06/08 22:49:55 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`product_id`), MAX(`product_id`) FROM inventory\n18/06/08 22:49:55 INFO db.IntegerSplitter: Split size: 389; Num splits: 4 from: 1 to: 1560\n18/06/08 22:49:55 INFO mapreduce.JobSubmitter: number of splits:4\n18/06/08 22:49:55 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1528497732555_0004\n18/06/08 22:49:55 INFO impl.YarnClientImpl: Submitted application application_1528497732555_0004\n18/06/08 22:49:55 INFO mapreduce.Job: The url to track the job: http://enhdpm.field.hortonworks.com:8088/proxy/application_1528497732555_0004/\n18/06/08 22:49:55 INFO mapreduce.Job: Running job: job_1528497732555_0004\n18/06/08 22:50:05 INFO mapreduce.Job: Job job_1528497732555_0004 running in uber mode : false\n18/06/08 22:50:05 INFO mapreduce.Job:  map 0% reduce 0%\n18/06/08 22:50:11 INFO mapreduce.Job:  map 25% reduce 0%\n18/06/08 22:50:12 INFO mapreduce.Job:  map 100% reduce 0%\n18/06/08 22:50:12 INFO mapreduce.Job: Job job_1528497732555_0004 completed successfully\n18/06/08 22:50:13 INFO mapreduce.Job: Counters: 30\n\tFile System Counters\n\t\tFILE: Number of bytes read\u003d0\n\t\tFILE: Number of bytes written\u003d671812\n\t\tFILE: Number of read operations\u003d0\n\t\tFILE: Number of large read operations\u003d0\n\t\tFILE: Number of write operations\u003d0\n\t\tHDFS: Number of bytes read\u003d474\n\t\tHDFS: Number of bytes written\u003d323694\n\t\tHDFS: Number of read operations\u003d16\n\t\tHDFS: Number of large read operations\u003d0\n\t\tHDFS: Number of write operations\u003d8\n\tJob Counters \n\t\tLaunched map tasks\u003d4\n\t\tOther local map tasks\u003d4\n\t\tTotal time spent by all maps in occupied slots (ms)\u003d131616\n\t\tTotal time spent by all reduces in occupied slots (ms)\u003d0\n\t\tTotal time spent by all map tasks (ms)\u003d16452\n\t\tTotal vcore-milliseconds taken by all map tasks\u003d16452\n\t\tTotal megabyte-milliseconds taken by all map tasks\u003d67387392\n\tMap-Reduce Framework\n\t\tMap input records\u003d4\n\t\tMap output records\u003d7282\n\t\tInput split bytes\u003d474\n\t\tSpilled Records\u003d0\n\t\tFailed Shuffles\u003d0\n\t\tMerged Map outputs\u003d0\n\t\tGC time elapsed (ms)\u003d356\n\t\tCPU time spent (ms)\u003d9660\n\t\tPhysical memory (bytes) snapshot\u003d1244020736\n\t\tVirtual memory (bytes) snapshot\u003d22116290560\n\t\tTotal committed heap usage (bytes)\u003d929038336\n\tFile Input Format Counters \n\t\tBytes Read\u003d0\n\tFile Output Format Counters \n\t\tBytes Written\u003d323694\n18/06/08 22:50:13 INFO mapreduce.ImportJobBase: Transferred 316.1074 KB in 19.4279 seconds (16.2708 KB/sec)\n18/06/08 22:50:13 INFO mapreduce.ImportJobBase: Retrieved 7282 records.\n18/06/08 22:50:13 INFO tool.CodeGenTool: Beginning code generation\n18/06/08 22:50:13 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `product` AS t LIMIT 1\n18/06/08 22:50:13 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/hdp/2.6.5.0-292/hadoop-mapreduce\nNote: /tmp/sqoop-zeppelin/compile/12d302ae1ee498248f614c3818139df4/product.java uses or overrides a deprecated API.\nNote: Recompile with -Xlint:deprecation for details.\n18/06/08 22:50:13 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-zeppelin/compile/12d302ae1ee498248f614c3818139df4/product.jar\n18/06/08 22:50:13 INFO manager.DirectMySQLManager: Beginning mysqldump fast path import\n18/06/08 22:50:13 INFO mapreduce.ImportJobBase: Beginning import of product\n18/06/08 22:50:13 INFO client.RMProxy: Connecting to ResourceManager at enhdpm.field.hortonworks.com/172.26.237.90:8050\n18/06/08 22:50:13 INFO client.AHSProxy: Connecting to Application History server at enhdpm.field.hortonworks.com/172.26.237.90:10200\n18/06/08 22:50:14 INFO db.DBInputFormat: Using read commited transaction isolation\n18/06/08 22:50:14 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`product_id`), MAX(`product_id`) FROM product\n18/06/08 22:50:14 INFO db.IntegerSplitter: Split size: 389; Num splits: 4 from: 1 to: 1560\n18/06/08 22:50:15 INFO mapreduce.JobSubmitter: number of splits:4\n18/06/08 22:50:15 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1528497732555_0005\n18/06/08 22:50:15 INFO impl.YarnClientImpl: Submitted application application_1528497732555_0005\n18/06/08 22:50:15 INFO mapreduce.Job: The url to track the job: http://enhdpm.field.hortonworks.com:8088/proxy/application_1528497732555_0005/\n18/06/08 22:50:15 INFO mapreduce.Job: Running job: job_1528497732555_0005\n18/06/08 22:50:26 INFO mapreduce.Job: Job job_1528497732555_0005 running in uber mode : false\n18/06/08 22:50:26 INFO mapreduce.Job:  map 0% reduce 0%\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "Paragraph received a SIGTERM\nExitValue: 143"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481483_1200306766",
+      "id": "20180608-220614_1600313938",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\nhdfs dfs -cat /user/zeppelin/customer/part-m-00000 | head -5\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "1,87462024688,Nowmer,Sheri,A.,2433 Bailey Road,,,,Tlaxiaco,Oaxaca,15057,Mexico,30,271-555-9715,119-555-1969,1961-08-26,M,$30K - $50K,F,4,2,Partial High School,1991-09-10,Bronze,Skilled Manual,0,4,Sheri Nowmerr\n2,87470586299,Whelply,Derrick,I.,2219 Dewing Avenue,,,,Sooke,BC,17172,Canada,101,211-555-7669,807-555-9033,1915-07-03,S,$70K - $90K,M,1,0,Partial High School,1993-03-11,Bronze,Professional,0,3,Derrick Whelplyr\n3,87475757600,Derry,Jeanne,N,7640 First Ave.,,,,Issaquah,WA,73980,USA,21,656-555-2272,221-555-2493,1910-06-21,M,$50K - $70K,F,1,1,Bachelors Degree,1991-06-11,Bronze,Professional,0,2,Jeanne Derryr\n4,87500482201,Spence,Michael,J.,337 Tosca Way,,,,Burnaby,BC,74674,Canada,92,929-555-7279,272-555-2844,1969-06-20,M,$10K - $30K,M,4,4,Partial High School,1994-05-21,Normal,Skilled Manual,0,2,Michael Spencer\n5,87514054179,Gutierrez,Maya,N,8668 Via Neruda,,,,Novato,CA,57355,USA,42,387-555-7172,260-555-6936,1951-05-10,S,$30K - $50K,F,3,0,Partial College,1992-08-21,Silver,Manual,0,3,Maya Gutierrezr\ncat: Unable to write to output stream.\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481483_1200306766",
+      "id": "20180605-212740_1500952735",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%dep\nz.reset \nz.load(\"/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar\") \nz.load(\"/usr/hdp/2.6.5.0-292/phoenix/lib/phoenix-spark-4.7.0.2.6.5.0-292.jar\")\nz.load(\"com.databricks:spark-csv_2.11:jar:1.5.0\")\n//make sure this are the correct versions, I think I’m working with a newer install.",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@796c9b02\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481484_1198383022",
+      "id": "20180605-212739_1954082349",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark.spark\n\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.types._\nimport org.apache.phoenix.spark._\nimport sqlContext.implicits._\n\nval schema \u003d StructType( List (\n    StructField(\"CUSTOMER_ID\",IntegerType,true),   \n    StructField(\"ACCOUNT_NUM\",StringType,true),\n    StructField(\"LNAME\",StringType,true),   \n    StructField(\"FNAME\",StringType,true)\n    ))\n\nvar df \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"false\").schema(schema).load(\"customer/part*\")\n\ndf.printSchema()\ndf.show\ndf.write.format(\"org.apache.phoenix.spark\").mode(SaveMode.Overwrite).options(Map(\"table\" -\u003e \"CORP.CUSTOMER\",\"zkUrl\" -\u003e \"enhdpm:2181:/hbase-unsecure\")).save\n\n  \n//spark.version\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql._\nimport org.apache.spark.sql.types._\nimport org.apache.phoenix.spark._\nimport sqlContext.implicits._\nschema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(CUSTOMER_ID,IntegerType,true), StructField(ACCOUNT_NUM,StringType,true), StructField(LNAME,StringType,true), StructField(FNAME,StringType,true))\ndf: org.apache.spark.sql.DataFrame \u003d [CUSTOMER_ID: int, ACCOUNT_NUM: string, LNAME: string, FNAME: string]\nroot\n |-- CUSTOMER_ID: integer (nullable \u003d true)\n |-- ACCOUNT_NUM: string (nullable \u003d true)\n |-- LNAME: string (nullable \u003d true)\n |-- FNAME: string (nullable \u003d true)\n\n+-----------+-----------+---------+--------+\n|CUSTOMER_ID|ACCOUNT_NUM|    LNAME|   FNAME|\n+-----------+-----------+---------+--------+\n|          1|87462024688|   Nowmer|   Sheri|\n|          2|87470586299|  Whelply| Derrick|\n|          3|87475757600|    Derry|  Jeanne|\n|          4|87500482201|   Spence| Michael|\n|          5|87514054179|Gutierrez|    Maya|\n|          6|87517782449|  Damstra|  Robert|\n|          7|87521172800| Kanagaki| Rebecca|\n|          8|87539744377|  Brunner|     Kim|\n|          9|87544797658| Blumberg|  Brenda|\n|         10|87568712234|    Stanz|  Darren|\n|         11|87572821378| Murraiin|Jonathan|\n|         12|87579237222|    Creek|   Jewel|\n|         13|87587122917|   Medina|   Peggy|\n|         14|87592626810| Rutledge|   Bryan|\n|         15|87597749829|Cavestany|  Walter|\n|         16|87603285908|   Planck|   Peggy|\n|         17|87625473141| Marshall|  Brenda|\n|         18|87637655735|   Wolter|  Daniel|\n|         19|87650814652|  Collins|  Dianne|\n|         20|87653979700|    Baker| Beverly|\n+-----------+-----------+---------+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481484_1198383022",
+      "id": "20180606-171439_38295730",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.spark\n\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.types._\nimport org.apache.phoenix.spark._\nimport sqlContext.implicits._\n\nval schema \u003d StructType( List (\n    StructField(\"CUSTOMER_ID\",StringType,true),   \n    StructField(\"ACCOUNT_NUM\",LongType,true),\n    StructField(\"LNAME\",StringType,true),   \n    StructField(\"FNAME\",StringType,true)\n    ))\n\nval df \u003d spark\n            .read\n            .option(\"header\", false)\n            .schema(schema)\n            .csv(\"data/customer/part*\")\n\ndf.printSchema()\ndf.show\ndf.write.format(\"org.apache.phoenix.spark\").mode(SaveMode.Overwrite).options(Map(\"table\" -\u003e \"CORP.CUSTOMER\",\"zkUrl\" -\u003e \"pathdpm:2181:/hbase-unsecure\")).save\n\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 384.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.lang.NullPointerException\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:1119)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:1113)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:101)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:502)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481485_1197998273",
+      "id": "20180605-213410_2122078575",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%jdbc(phoenix)\n\nselect * from CORP.CUSTOMER\n",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.phoenix.schema.TableNotFoundException: ERROR 1012 (42M03): Table undefined. tableName\u003dCORP.CUSTOMER\n\tat org.apache.phoenix.compile.FromCompiler$BaseColumnResolver.createTableRef(FromCompiler.java:539)\n\tat org.apache.phoenix.compile.FromCompiler$SingleTableColumnResolver.\u003cinit\u003e(FromCompiler.java:365)\n\tat org.apache.phoenix.compile.FromCompiler.getResolverForQuery(FromCompiler.java:213)\n\tat org.apache.phoenix.jdbc.PhoenixStatement$ExecutableSelectStatement.compilePlan(PhoenixStatement.java:397)\n\tat org.apache.phoenix.jdbc.PhoenixStatement$ExecutableSelectStatement.compilePlan(PhoenixStatement.java:378)\n\tat org.apache.phoenix.jdbc.PhoenixStatement$1.call(PhoenixStatement.java:271)\n\tat org.apache.phoenix.jdbc.PhoenixStatement$1.call(PhoenixStatement.java:266)\n\tat org.apache.phoenix.call.CallRunner.run(CallRunner.java:53)\n\tat org.apache.phoenix.jdbc.PhoenixStatement.executeQuery(PhoenixStatement.java:265)\n\tat org.apache.phoenix.jdbc.PhoenixStatement.execute(PhoenixStatement.java:1444)\n\tat org.apache.commons.dbcp2.DelegatingStatement.execute(DelegatingStatement.java:291)\n\tat org.apache.commons.dbcp2.DelegatingStatement.execute(DelegatingStatement.java:291)\n\tat org.apache.zeppelin.jdbc.JDBCInterpreter.executeSql(JDBCInterpreter.java:682)\n\tat org.apache.zeppelin.jdbc.JDBCInterpreter.interpret(JDBCInterpreter.java:763)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:101)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:502)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\n\tat org.apache.zeppelin.scheduler.ParallelScheduler$JobRunner.run(ParallelScheduler.java:162)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481485_1197998273",
+      "id": "20180606-200307_1148085714",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481486_1199152520",
+      "id": "20180606-202742_548983277",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.pyspark\nfrom pyspark.sql.types import *\nfrom pyspark.sql import SQLContext\nfrom pprint import pprint\n#lines \u003d sc.textFile(\"data/customer/part*\")\n#csv \u003dlines.map(lambda line: line.split(\",\"))\n#csv2 \u003d lines.map(lambda x: x.split(\",\")[:2])\n#print csv2.take(2)\n#print csv.take(2)\n\n#type (rdd)\n#df \u003d rdd.toDF([\"customer_id\",\"account_num\",\"lname\",\"fname\",\"mi\",\"address1\",\"address2\",\"address3\",\"address4\",\"city\",\"state_province\",\"postal_code\",\"country\",\"customer_region_id\",\"phone1\",\"phone2\",\"birthdate\",\"marital_status\",\"yearly_income\",\"gender\",\"total_children\",\"num_children_at_home\",\"education\",\"date_accnt_opened\",\"member_card\",\"occupation\",\"houseowner\",\"num_cars_owned\",\"fullname\"])\n\n#schema \u003d StructType([   StructField(\u0027customer_id\u0027,StringType()),   StructField(\u0027account_num\u0027,IntegerType())    ])\nschema \u003d StructType([   \n    StructField(\u0027CUSTOMER_ID\u0027,StringType()),   \n    StructField(\u0027ACCOUNT_NUM\u0027,LongType()),\n    StructField(\u0027LNAME\u0027,StringType()),   \n    StructField(\u0027FNAME\u0027,StringType())\n    ])\n\n#\"DataType\", \"NullType\", \"StringType\", \"BinaryType\", \"BooleanType\", \"DateType\",\n#    \"TimestampType\", \"DecimalType\", \"DoubleType\", \"FloatType\", \"ByteType\", \"IntegerType\",\n#    \"LongType\", \"ShortType\", \"ArrayType\", \"MapType\", \"StructField\", \"StructType\"]\n    \n#df \u003d csv2.toDF(schema)\n#df \u003d csv2.toDF([\"customer_id\",\"account_num\"])\n#df.withColumn(\"account_num\",df[\"account_num\"].cast(IntegerType()))\n\ndf\u003dspark.read.csv(\"data/customer/part*\",schema\u003dschema)\n#df\u003dspark.read.csv(\"data/a.csv\",schema\u003dschema)\n#df\u003dspark.read.csv(\"data/a.csv\")\n\n#ndf \u003d sqlc.createDataFrame(csv2,schema)\n\n#sqlc \u003d SQLContext(sc)\n#df \u003d sqlc.createDataFrame(csv2,schema)\n\ndf.printSchema()\nsample\u003ddf.take(2)\npprint (sample)\n#df.write.format(\"\")\n\ndf.write \\\n  .format(\"org.apache.phoenix.spark\") \\\n  .mode(\"overwrite\") \\\n  .option(\"table\", \"CORP.CUSTOMER\") \\\n  .option(\"zkUrl\", \"pathdpm:2181:/hbase-unsecure\") \\\n  .save()",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- CUSTOMER_ID: string (nullable \u003d true)\n |-- ACCOUNT_NUM: long (nullable \u003d true)\n |-- LNAME: string (nullable \u003d true)\n |-- FNAME: string (nullable \u003d true)\n\n[Row(CUSTOMER_ID\u003du\u00277711\u0027, ACCOUNT_NUM\u003d61669039130, LNAME\u003du\u0027Weber\u0027, FNAME\u003du\u0027Jo\u0027),\n Row(CUSTOMER_ID\u003du\u00277712\u0027, ACCOUNT_NUM\u003d61674285531, LNAME\u003du\u0027Bachman\u0027, FNAME\u003du\u0027Dan\u0027)]\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-9135800574702973936.py\", line 367, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-9135800574702973936.py\", line 360, in \u003cmodule\u003e\n    exec(code, _zcUserQueryNameSpace)\n  File \"\u003cstdin\u003e\", line 18, in \u003cmodule\u003e\n  File \"/usr/hdp/current/spark2-client/python/pyspark/sql/readwriter.py\", line 703, in save\n    self._jwrite.save()\n  File \"/usr/hdp/current/spark2-client/python/lib/py4j-0.10.6-src.zip/py4j/java_gateway.py\", line 1160, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/usr/hdp/current/spark2-client/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/usr/hdp/current/spark2-client/python/lib/py4j-0.10.6-src.zip/py4j/protocol.py\", line 320, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o125.save.\n: java.lang.AbstractMethodError: org.apache.phoenix.spark.DefaultSource.createRelation(Lorg/apache/spark/sql/SQLContext;Lorg/apache/spark/sql/SaveMode;Lscala/collection/immutable/Map;Lorg/apache/spark/sql/Dataset;)Lorg/apache/spark/sql/sources/BaseRelation;\n\tat org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:46)\n\tat org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:70)\n\tat org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:68)\n\tat org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:86)\n\tat org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:131)\n\tat org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:127)\n\tat org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:155)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n\tat org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:152)\n\tat org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:127)\n\tat org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:80)\n\tat org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:80)\n\tat org.apache.spark.sql.DataFrameWriter$$anonfun$runCommand$1.apply(DataFrameWriter.scala:654)\n\tat org.apache.spark.sql.DataFrameWriter$$anonfun$runCommand$1.apply(DataFrameWriter.scala:654)\n\tat org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:77)\n\tat org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:654)\n\tat org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:273)\n\tat org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:267)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:498)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.GatewayConnection.run(GatewayConnection.java:214)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481486_1199152520",
+      "id": "20180605-205219_442443957",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%dep\nz.reset \nz.load(\"/usr/hdp/current/test/apache-phoenix-4.13.1-HBase-1.1-bin/phoenix-4.13.1-HBase-1.1-client.jar\") \nz.load(\"/usr/hdp/current/test/apache-phoenix-4.13.1-HBase-1.1-bin/phoenix-spark-4.13.1-HBase-1.1.jar\")\n//make sure this are the correct versions, I think I’m working with a newer install.",
+      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@6c2a077b\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528502481487_1198767771",
+      "id": "20180606-213128_533745092",
+      "dateCreated": "Jun 9, 2018 12:01:21 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "pheonix",
+  "id": "2DHN68UTR",
+  "angularObjects": {
+    "2CHS8UYQQ:shared_process": [],
+    "2C8A4SZ9T_livy2:shared_process": [],
+    "2CK8A9MEG:shared_process": [],
+    "2CKX8WPU1:shared_process": [],
+    "2C4U48MY3_spark2:shared_process": [],
+    "2CKAY1A8Y:shared_process": [],
+    "2CKEKWY8Z:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

@@ -1,8 +1,70 @@
 {
   "paragraphs": [
     {
+      "text": "%md\n# this is a sampe notesbook to demonstarate:\n- accessing data in db via jdbc interperter\n-- postgres\n-- mysql\n-- phoenix\n-- hive\n\n- installing and running shell scripts (+impersonation)\n- sqoop data from jdbc to hdfs\n- sqoop data from jdbc to hive/ORC\n- \n-- laod data tp phoenix from sqoop/hdfs import\n-- laod data to phoemix via psql\n-- load data to phoenix via spark (TL)\n\n#Cluster Notes\n#Shell notes\n#DB notes\n- Postgres\n- Mysql\n\n#Secure Cluster Notes\n\n",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 11:20:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1528845370472_503974477",
+      "id": "20180612-231610_434492873",
+      "dateCreated": "Jun 12, 2018 11:16:10 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\nwhoami  ",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 2:20:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sh"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "admin\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528761917196_1948920595",
+      "id": "20180612-000517_2081897423",
+      "dateCreated": "Jun 12, 2018 12:05:17 AM",
+      "dateStarted": "Jun 12, 2018 2:20:49 PM",
+      "dateFinished": "Jun 12, 2018 2:20:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
       "text": "%sh\n\necho get git\n[[ $(command -v git) ]] || sudo yum install git -y\n\necho get wget\n[[ $(command -v wget) ]] || sudo yum install wget -y\ncd ~\n\necho check destination dir\n[[ -d ~/phxdemo ]] \u0026\u0026  mv ~/phxdemo  ~/phxdem.bck-`date +%s`\n\necho clone repo\ngit clone https://github.com/edennuriel/tableau-odbc-phoenix-tutorial ~/phxdemo\n",
-      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 2:20:54 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -24,7 +86,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "get git\nget wget\ncheck destination dir\nclone repo\nCloning into \u0027/home/zeppelin/phxdemo\u0027...\n"
+            "data": "get git\nget wget\ncheck destination dir\nclone repo\nCloning into \u0027/home/admin/phxdemo\u0027...\n"
           }
         ]
       },
@@ -32,8 +94,45 @@
       "jobName": "paragraph_1528502481473_1202615260",
       "id": "20180606-220352_778902877",
       "dateCreated": "Jun 9, 2018 12:01:21 AM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Jun 12, 2018 2:20:54 PM",
+      "dateFinished": "Jun 12, 2018 2:20:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n#postgres version\npsql  -h enchla-8-master-3 postgres postgres \u003c\u003c EOF \ncreate database corp;\ncreate user admin password \u0027admin1234\u0027;\ngrant all privileges on database corp to admin;;\nEOF",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 6:59:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sh"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "ERROR:  database \"corp\" already exists\nERROR:  role \"admin\" already exists\nGRANT\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528828624998_216386366",
+      "id": "20180612-183704_1507044937",
+      "dateCreated": "Jun 12, 2018 6:37:04 PM",
+      "dateStarted": "Jun 12, 2018 6:59:29 PM",
+      "dateFinished": "Jun 12, 2018 6:59:29 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
@@ -73,8 +172,9 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%jdbc(mysql)\nselect * from corp.sales limit 10;",
-      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "text": "%jdbc\nselect * from corp.sales limit 10;",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 10:17:32 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -96,7 +196,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "product_id\ttime_id\tcustomer_id\tpromotion_id\tstore_id\tstore_sales\tstore_cost\tunit_sales\n1\t1011\t1979\t0\t3\t14.25\t5.5575\t5\n1\t1019\t9137\t0\t20\t8.55\t3.591\t3\n1\t1024\t6709\t0\t11\t8.55\t3.1635\t3\n1\t1029\t1393\t0\t21\t8.55\t3.6765\t3\n1\t1030\t4861\t0\t6\t5.7\t2.793\t2\n1\t1054\t6843\t1182\t15\t5.7\t2.109\t2\n1\t1060\t5295\t0\t16\t5.7\t2.508\t2\n1\t736\t2927\t0\t7\t14.25\t4.7025\t5\n1\t741\t614\t0\t17\t8.55\t2.565\t3\n1\t741\t6211\t0\t19\t5.7\t2.622\t2\n"
+            "data": "product_id\ttime_id\tcustomer_id\tpromotion_id\tstore_id\tstore_sales\tstore_cost\tunit_sales\n173\t748                 \t2094\t54                  \t1\t4.29000000000000004\t1.84470000000000001\t3\n1119\t748                 \t2094\t54                  \t1\t9.50999999999999979\t3.51869999999999994\t3\n1242\t748                 \t2094\t54                  \t1\t7.91999999999999993\t2.85119999999999996\t4\n460\t748                 \t2094\t54                  \t1\t6.44000000000000039\t2.70480000000000009\t4\n104\t748                 \t2094\t54                  \t1\t11.6699999999999999\t3.96779999999999999\t3\n27\t748                 \t2094\t54                  \t1\t7.95000000000000018\t3.81599999999999984\t3\n67\t748                 \t1277\t54                  \t1\t7.44000000000000039\t2.90160000000000018\t4\n217\t748                 \t1277\t54                  \t1\t2.7200000000000002\t0.84319999999999995\t4\n666\t748                 \t1745\t54                  \t1\t2.66999999999999993\t1.33499999999999996\t3\n1122\t748                 \t1745\t54                  \t1\t2.2200000000000002\t0.777000000000000024\t3\n"
           }
         ]
       },
@@ -104,13 +204,15 @@
       "jobName": "paragraph_1528502481479_1201845762",
       "id": "20180606-220351_1663909097",
       "dateCreated": "Jun 9, 2018 12:01:21 AM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Jun 12, 2018 10:17:33 PM",
+      "dateFinished": "Jun 12, 2018 10:17:36 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%jdbc(phoenix)\ndrop table if EXISTS corp.customer;\ndrop table if EXISTS corp.sales;\ndrop table if EXISTS corp.inventory;\ndrop table if EXISTS corp.product;\ndrop table if EXISTS corp.store;",
-      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 10:51:37 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -156,13 +258,15 @@
       "jobName": "paragraph_1528502481479_1201845762",
       "id": "20180606-220351_1399879902",
       "dateCreated": "Jun 9, 2018 12:01:21 AM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Jun 12, 2018 10:51:37 PM",
+      "dateFinished": "Jun 12, 2018 10:52:01 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%sh\n#loading the data to phonix using psql\ncd ~/phxdemo\n./phoenix_load.sh",
-      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "text": "%sh\n#loading the data to phonix using psql\ncd ~/phxdemo\n# wehn using a kerberoized cluster\nid\nkinit -kt /etc/security/keytabs/hbase.headless.keytab hbase-enchla@FIELD.HORTONWORKS.COM\n# ./phoenix_load.sh",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 11:36:44 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/sh",
@@ -178,11 +282,15 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
+        "code": "ERROR",
         "msg": [
           {
             "type": "TEXT",
-            "data": "adding /usr/jdk64/jdk1.8.0_112/bin (rc \u003d 0)\nexport PATH\u003d/usr/jdk64/jdk1.8.0_112/bin:/usr/sbin:/sbin:/usr/lib/ambari-server/*:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/var/lib/ambari-agent\nadding /usr/hdp/current/phoenix-client/bin (rc \u003d 0)\nexport PATH\u003d/usr/hdp/current/phoenix-client/bin:/usr/jdk64/jdk1.8.0_112/bin:/usr/sbin:/sbin:/usr/lib/ambari-server/*:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/var/lib/ambari-agent\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:21 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:22 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 1.568 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 10281 rows upserted\nTime: 2.99 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:30 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:31 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 1.525 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 7282 rows upserted\nTime: 1.092 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:37 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:39 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 4.746 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 1560 rows upserted\nTime: 0.51 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:24:47 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:24:48 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 1.519 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 164558 rows upserted\nTime: 11.601 sec(s)\n\nSLF4J: Class path contains multiple SLF4J bindings.\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/phoenix/phoenix-4.7.0.2.6.5.0-292-client.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: Found binding in [jar:file:/usr/hdp/2.6.5.0-292/hadoop/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]\nSLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.\n18/06/08 23:25:04 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n18/06/08 23:25:05 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.\nno rows upserted\nTime: 3.042 sec(s)\n\ncsv columns from database.\nCSV Upsert complete. 25 rows upserted\nTime: 0.117 sec(s)\n\n"
+            "data": "uid\u003d1020(admin) gid\u003d1020(admin) groups\u003d1020(admin)\nkinit: Permission denied while getting initial credentials\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "ExitValue: 1"
           }
         ]
       },
@@ -190,13 +298,15 @@
       "jobName": "paragraph_1528502481480_1199922017",
       "id": "20180608-230901_483793132",
       "dateCreated": "Jun 9, 2018 12:01:21 AM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Jun 12, 2018 11:36:44 PM",
+      "dateFinished": "Jun 12, 2018 11:36:44 PM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%jdbc(phoenix)\nselect * from corp.customer limit 10;",
-      "dateUpdated": "Jun 9, 2018 12:01:21 AM",
+      "text": "%jdbc(phoenix)\nselect * from CORP.CUSTOMER limit 10;",
+      "user": "admin",
+      "dateUpdated": "Jun 12, 2018 11:27:29 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -218,7 +328,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "CUSTOMER_ID\tACCOUNT_NUM\tLNAME\tFNAME\tMI\tADDRESS1\tADDRESS2\tADDRESS3\tADDRESS4\tCITY\tSTATE_PROVINCE\tPOSTAL_CODE\tCOUNTRY\tCUSTOMER_REGION_ID\tPHONE1\tPHONE2\tBIRTHDATE\tMARITAL_STATUS\tYEARLY_INCOME\tGENDER\tTOTAL_CHILDREN\tNUM_CHILDREN_AT_HOME\tEDUCATION\tDATE_ACCNT_OPENED\tMEMBER_CARD\tOCCUPATION\tHOUSEOWNER\tNUM_CARS_OWNED\tFULLNAME\n1\t87462024688\tNowmer\tSheri\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n2\t87470586299\tWhelply\tDerrick\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n3\t87475757600\tDerry\tJeanne\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n4\t87500482201\tSpence\tMichael\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n5\t87514054179\tGutierrez\tMaya\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n6\t87517782449\tDamstra\tRobert\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n7\t87521172800\tKanagaki\tRebecca\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n8\t87539744377\tBrunner\tKim\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n9\t87544797658\tBlumberg\tBrenda\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n10\t87568712234\tStanz\tDarren\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\n"
+            "data": "CUSTOMER_ID\tACCOUNT_NUM\tLNAME\tFNAME\tMI\tADDRESS1\tADDRESS2\tADDRESS3\tADDRESS4\tCITY\tSTATE_PROVINCE\tPOSTAL_CODE\tCOUNTRY\tCUSTOMER_REGION_ID\tPHONE1\tPHONE2\tBIRTHDATE\tMARITAL_STATUS\tYEARLY_INCOME\tGENDER\tTOTAL_CHILDREN\tNUM_CHILDREN_AT_HOME\tEDUCATION\tDATE_ACCNT_OPENED\tMEMBER_CARD\tOCCUPATION\tHOUSEOWNER\tNUM_CARS_OWNED\tFULLNAME\n1\t87462024688\tNowmer\tSheri\tA.\t2433 Bailey Road\tnull\tnull\tnull\tTlaxiaco\tOaxaca\t15057\tMexico\t30\t271-555-9715\t119-555-1969\t1961-08-26 00:00:00.000\tM\t$30K - $50K\tF\t4\t2\tPartial High School\t1991-09-10 00:00:00.000\tBronze\tSkilled Manual\ttrue\t4\tSheri Nowmer\n2\t87470586299\tWhelply\tDerrick\tI.\t2219 Dewing Avenue\tnull\tnull\tnull\tSooke\tBC\t17172\tCanada\t101\t211-555-7669\t807-555-9033\t1915-07-03 00:00:00.000\tS\t$70K - $90K\tM\t1\t0\tPartial High School\t1993-03-11 00:00:00.000\tBronze\tProfessional\tfalse\t3\tDerrick Whelply\n3\t87475757600\tDerry\tJeanne\tN\t7640 First Ave.\tnull\tnull\tnull\tIssaquah\tWA\t73980\tUSA\t21\t656-555-2272\t221-555-2493\t1910-06-21 00:00:00.000\tM\t$50K - $70K\tF\t1\t1\tBachelors Degree\t1991-06-11 00:00:00.000\tBronze\tProfessional\ttrue\t2\tJeanne Derry\n4\t87500482201\tSpence\tMichael\tJ.\t337 Tosca Way\tnull\tnull\tnull\tBurnaby\tBC\t74674\tCanada\t92\t929-555-7279\t272-555-2844\t1969-06-20 00:00:00.000\tM\t$10K - $30K\tM\t4\t4\tPartial High School\t1994-05-21 00:00:00.000\tNormal\tSkilled Manual\tfalse\t2\tMichael Spence\n5\t87514054179\tGutierrez\tMaya\tN\t8668 Via Neruda\tnull\tnull\tnull\tNovato\tCA\t57355\tUSA\t42\t387-555-7172\t260-555-6936\t1951-05-10 00:00:00.000\tS\t$30K - $50K\tF\t3\t0\tPartial College\t1992-08-21 00:00:00.000\tSilver\tManual\tfalse\t3\tMaya Gutierrez\n6\t87517782449\tDamstra\tRobert\tF.\t1619 Stillman Court\tnull\tnull\tnull\tLynnwood\tWA\t90792\tUSA\t75\t922-555-5465\t333-555-5915\t1942-10-08 00:00:00.000\tS\t$70K - $90K\tF\t3\t0\tBachelors Degree\t1992-04-05 00:00:00.000\tBronze\tProfessional\ttrue\t3\tRobert Damstra\n7\t87521172800\tKanagaki\tRebecca\tN\t2860 D Mt. Hood Circle\tnull\tnull\tnull\tTlaxiaco\tOaxaca\t13343\tMexico\t30\t515-555-6247\t934-555-9211\t1949-03-27 00:00:00.000\tM\t$30K - $50K\tF\t2\t1\tPartial High School\t1991-05-01 00:00:00.000\tBronze\tManual\ttrue\t3\tRebecca Kanagaki\n8\t87539744377\tBrunner\tKim\tH.\t6064 Brodia Court\tnull\tnull\tnull\tSan Andres\tDF\t12942\tMexico\t106\t411-555-6825\t130-555-6818\t1922-08-10 00:00:00.000\tM\t$50K - $70K\tM\t2\t2\tBachelors Degree\t1992-06-11 00:00:00.000\tBronze\tProfessional\ttrue\t3\tKim Brunner\n9\t87544797658\tBlumberg\tBrenda\tC.\t7560 Trees Drive\tnull\tnull\tnull\tRichmond\tBC\t17256\tCanada\t90\t815-555-3975\t642-555-6483\t1979-06-23 00:00:00.000\tM\t$10K - $30K\tM\t5\t3\tPartial High School\t1993-11-14 00:00:00.000\tNormal\tSkilled Manual\ttrue\t1\tBrenda Blumberg\n10\t87568712234\tStanz\tDarren\tM.\t1019 Kenwal Rd.\tnull\tnull\tnull\tLake Oswego\tOR\t82017\tUSA\t64\t847-555-5443\t212-555-8635\t1949-08-26 00:00:00.000\tS\t$30K - $50K\tM\t4\t0\tBachelors Degree\t1993-05-04 00:00:00.000\tGolden\tManagement\tfalse\t4\tDarren Stanz\n"
           }
         ]
       },
@@ -226,8 +336,9 @@
       "jobName": "paragraph_1528502481480_1199922017",
       "id": "20180608-231827_168037997",
       "dateCreated": "Jun 9, 2018 12:01:21 AM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Jun 12, 2018 11:27:29 PM",
+      "dateFinished": "Jun 12, 2018 11:27:30 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
@@ -816,8 +927,8 @@
   "name": "pheonix",
   "id": "2DHN68UTR",
   "angularObjects": {
-    "2CHS8UYQQ:shared_process": [],
     "2C8A4SZ9T_livy2:shared_process": [],
+    "2CHS8UYQQ:admin:": [],
     "2CK8A9MEG:shared_process": [],
     "2CKX8WPU1:shared_process": [],
     "2C4U48MY3_spark2:shared_process": [],
